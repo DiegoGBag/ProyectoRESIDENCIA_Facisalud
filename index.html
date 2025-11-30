@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>UABC Access</title>
+  <style>
+    /* Reset mínimo */
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow: hidden; /* Desactiva el scroll de la página */
+    }
+
+    /* Contenedor principal ocupa la ventana completa */
+    .split {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+    }
+
+    /* Lado izquierdo */
+    .left {
+      transform: scale(1.3); /* 1.3 = 130% del tamaño original */
+  transform-origin: center center; /* centra el zoom */
+
+      flex: 1;
+      background-color: #FFFFFF; /* fondo blanco puro */
+      /* línea delgada a la derecha para separar */
+      border-right: 2px solid #006400; /* línea entre divisiones */
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    
+
+    /* Lado derecho */
+    .right {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;  /* Alinear al final (bottom) para el texto */
+      justify-content: center;
+    }
+
+    /* Imagen que cubre completamente la mitad derecha */
+    .right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .university-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .university-title {
+      color: #006400;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .university-motto {
+      color: #006400;
+      font-size: 1rem;
+      font-weight: normal;
+      margin: 0.3rem 0 0 0;
+      font-style: italic;
+    }
+
+    /* Componentes del login replicado */
+    .login-wrap {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .site-title {
+      text-align: center;
+      color: #006b3a; /* verde más oscuro para el título */
+      margin: 0 0 6px 0;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .site-subtitle {
+      text-align: center;
+      color: #2b6b52;
+      margin: 0 0 18px 0;
+      font-size: 14px;
+    }
+
+    /* Pestañas tipo toggle */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(0,0,0,0.02);
+      padding: 6px;
+      border-radius: 8px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 18px;
+    }
+
+    .tabs button {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #2e7a57;
+      font-weight: 600;
+    }
+
+    .tabs button.active {
+      background: #ffffff;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    /* Tarjeta que contiene el formulario (sin bordes) */
+    .card {
+      background: transparent;
+      padding: 20px;
+      opacity: 1;
+      transition: all 0.2s ease-in-out;
+    }
+
+    /* Estado de fade out para la tarjeta */
+    .card.fade-out {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+
+    .card h2 {
+      margin: 0 0 6px 0;
+      color: #083b2a;
+      font-size: 20px;
+    }
+
+    .card p.lead {
+      margin: 0 0 14px 0;
+      color: #4b7a6a;
+      font-size: 13px;
+    }
+
+    .form-group { margin-bottom: 18px; }
+
+    /* Labels visibles encima de los inputs */
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #2b6b52;
+      font-size: 13px;
+    }
+
+    .input-icon {
+      position: relative;
+    }
+
+    .input-icon svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      fill: #2b7a5a;
+      opacity: 0.9;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px 12px 12px 42px; /* espacio para el icono */
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: #eef9f1; /* input con tono verdoso claro */
+      box-sizing: border-box;
+      font-size: 14px;
+      color: #083b2a;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: #006400; /* color divisoria/primario */
+      color: #fff;
+      padding: 12px 14px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary svg { width: 18px; height: 18px; }
+
+    /* Responsive: en pantallas estrechas apilar verticalmente */
+    @media (max-width: 700px) {
+      .split {
+        flex-direction: column;
+      }
+      /* Convertir la línea vertical en horizontal entre las secciones */
+      .left {
+        border-right: none;
+        border-bottom: 2px solid #006400;
+        padding: 2rem 1rem;
+      }
+      .login-wrap { padding: 0 8px; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/toggle-password.css" />
+</head>
+<body>
+  <div class="split">
+    <section class="left">
+      <div class="login-wrap" role="region" aria-label="Login">
+        <h1 class="site-title">UABC Access</h1>
+        <p class="site-subtitle">Bienvenido, por favor inicie sesión.</p>
+
+        <div class="tabs" role="tablist" aria-label="Tipo de usuario">
+          <button id="tab-docente" role="tab" aria-selected="false">Docente</button>
+          <button id="tab-admin" role="tab" class="active" aria-selected="true">Administrador</button>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <h2>Acceso Administrador</h2>
+            <p class="lead">Ingrese sus credenciales de administrador.</p>
+
+            <form>
+              <div class="form-group">
+                <label for="usuario">Usuario</label>
+                <div class="input-icon">
+                <!-- icono usuario -->
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v1h20v-1c0-3.3-6.7-5-10-5z"/></svg>
+                <input id="usuario" type="text" placeholder="e.g. admin" autocomplete="username">
+                <button type="button" class="toggle-password" aria-label="Mostrar contraseA" aria-pressed="false" title="Mostrar/Ocultar contraseA">
+                  <!-- Ojo (mostrar) -->
+                  <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 5C6 5 2 12 2 12s4 7 10 7 10-7 10-7-4-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10z"/>
+                  </svg>
+                  <!-- Ojo tachado (ocultar) -->
+                  <svg class="icon-eye-off" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M2 12s4-7 10-7c1.9 0 3.6.6 5 1.4L19 5l2 2-2 2c1.6 1.5 3 3 3 3s-4 7-10 7c-1.9 0-3.6-.6-5-1.4L5 19l-2-2 2-2C3.4 12.1 2 12 2 12zm10 5a5 5 0 01-5-5c0-.7.1-1.4.4-2L15 17c-.6.3-1.3.5-2 .5zm5-5a5 5 0 00-5-5c-.7 0-1.4.1-2 .4l7.6 7.6c.3-.6.4-1.3.4-2z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Contraseña</label>
+              <div class="input-icon input-password">
+                <!-- icono candado -->
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 8h-1V6c0-2.8-2.2-5-5-5S6 3.2 6 6v2H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm-7 0V6c0-1.7 1.3-3 3-3s3 1.3 3 3v2h-6z"/></svg>
+                <input id="password" type="password" placeholder="Contraseña" autocomplete="current-password">
+                <button type="button" class="toggle-password" aria-label="Mostrar" aria-pressed="false" title="Mostrar/Ocultar">
+                  <!-- Ojo (mostrar) -->
+                  <svg class="icon-eye" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 5C6 5 2 12 2 12s4 7 10 7 10-7 10-7-4-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10z"/>
+                  </svg>
+                  <!-- Ojo tachado (ocultar) -->
+                  <svg class="icon-eye-off" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M2 12s4-7 10-7c1.9 0 3.6.6 5 1.4L19 5l2 2-2 2c1.6 1.5 3 3 3 3s-4 7-10 7c-1.9 0-3.6-.6-5-1.4L5 19l-2-2 2-2C3.4 12.1 2 12 2 12zm10 5a5 5 0 01-5-5c0-.7.1-1.4.4-2L15 17c-.6.3-1.3.5-2 .5zm5-5a5 5 0 00-5-5c-.7 0-1.4.1-2 .4l7.6 7.6c.3-.6.4-1.3.4-2z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn-primary">Iniciar Sesión
+                <!-- Flechita blanca (stroke) -->
+                <svg viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none">
+                  <path d="M5 12h11" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 5l7 7-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <script>
+      // Pestañas interactivas: cambiar texto del formulario según selección
+      (function() {
+        const tabDoc = document.getElementById('tab-docente');
+        const tabAdmin = document.getElementById('tab-admin');
+        const card = document.querySelector('.card');
+        const cardTitle = document.querySelector('.card h2');
+        const lead = document.querySelector('.card .lead');
+        const userInput = document.querySelector('#usuario');
+
+        function activate(tab) {
+          // Primero hacemos el fade out de toda la tarjeta
+          card.classList.add('fade-out');
+          
+          // Esperamos a que termine la animación más corta
+          setTimeout(() => {
+            if (tab === 'docente') {
+              tabDoc.classList.add('active');
+              tabDoc.setAttribute('aria-selected', 'true');
+              tabAdmin.classList.remove('active');
+              tabAdmin.setAttribute('aria-selected', 'false');
+              cardTitle.textContent = 'Acceso Docente';
+              lead.textContent = 'Ingrese sus credenciales de docente.';
+              userInput.placeholder = 'e.g. docente';
+            } else {
+              tabAdmin.classList.add('active');
+              tabAdmin.setAttribute('aria-selected', 'true');
+              tabDoc.classList.remove('active');
+              tabDoc.setAttribute('aria-selected', 'false');
+              cardTitle.textContent = 'Acceso Administrador';
+              lead.textContent = 'Ingrese sus credenciales de administrador.';
+              userInput.placeholder = 'e.g. admin';
+            }
+            
+            // Hacemos el fade in de toda la tarjeta
+            card.classList.remove('fade-out');
+          }, 200); // Reducido a 200ms para coincidir con la nueva duración
+        }
+
+        tabDoc.addEventListener('click', function(e) { e.preventDefault(); activate('docente'); });
+        tabAdmin.addEventListener('click', function(e) { e.preventDefault(); activate('admin'); });
+
+        // Soporte para teclas Enter/Space
+        [tabDoc, tabAdmin].forEach(function(btn) {
+          btn.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+          });
+        });
+      })();
+    </script>
+    <script src="assets/js/toggle-password.js"></script>
+
+    <section class="right">
+      <img src="https://fundacionuabc.org/wp-content/uploads/2025/06/Encuadre-Dia-Borrego-Cimarron.jpg" alt="Foto UABC">
+    </section>
+  </div>
+</body>
+</html>
