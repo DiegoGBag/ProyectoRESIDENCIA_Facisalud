@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil Docente - UABC</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #006400;
+      font-size: 2rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      color: #2b6b52;
+      font-size: 0.95rem;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      color: #006400;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #006400;
+      padding-bottom: 10px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 20px;
+    }
+
+    .form-row.full {
+      grid-template-columns: 1fr;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="email"],
+    .form-group select,
+    .form-group textarea {
+      padding: 10px 12px;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 8px;
+      background-color: #eef9f1;
+      font-family: Arial, sans-serif;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="number"]:focus,
+    .form-group input[type="email"]:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #006400;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(0, 100, 0, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .radio-option,
+    .checkbox-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .radio-option input[type="radio"],
+    .checkbox-option input[type="checkbox"] {
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      accent-color: #006400;
+    }
+
+    .radio-option label,
+    .checkbox-option label {
+      cursor: pointer;
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 40px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: #006400;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #004d00;
+    }
+
+    .btn-secondary {
+      background-color: #e0e0e0;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background-color: #d0d0d0;
+    }
+
+    .required::after {
+      content: " *";
+      color: red;
+    }
+
+    .file-upload-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .file-upload-btn {
+      padding: 8px 16px;
+      background-color: #f0f0f0;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+
+    .file-upload-btn:hover {
+      background-color: #e8e8e8;
+      border-color: #006400;
+      color: #006400;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .file-name {
+      color: #666;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .help-text {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 6px;
+    }
+
+    .file-name.loaded::before {
+      content: "✓ ";
+      color: #006400;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .radio-group,
+      .checkbox-group {
+        gap: 15px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>I. Perfil Docente</h1>
+    <p class="subtitle">Información personal, académica y profesional.</p>
+
+    <form id="docenteForm">
+      <!-- Sección Identificación -->
+      <div class="section">
+        <h2 class="section-title">Identificación</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nombre" class="required">Nombre completo del docente</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ej: Dr. Juan Perez" required>
+          </div>
+          <div class="form-group">
+            <label for="empleado" class="required">Número de empleado</label>
+            <input type="number" id="empleado" name="empleado" placeholder="Ej: 123456" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Formación Académica -->
+      <div class="section">
+        <h2 class="section-title">Formación Académica</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="grado" class="required">Último grado obtenido</label>
+            <select id="grado" name="grado" required>
+              <option value="">Seleccione un grado académico</option>
+              <option value="licenciatura">Licenciatura</option>
+              <option value="maestria">Maestría</option>
+              <option value="doctorado">Doctorado</option>
+              <option value="posdoctorado">Posdoctorado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="especialidad">¿Cuenta con alguna especialidad? ¿Cuál?</label>
+            <input type="text" id="especialidad" name="especialidad" placeholder="Especifique el área">
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Trayectoria -->
+      <div class="section">
+        <h2 class="section-title">Trayectoria</h2>
+        
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="required">Modalidad de contrato</label>
+            <div class="radio-group">
+              <div class="radio-option">
+                <input type="radio" id="ptc" name="modalidad" value="PTC" required>
+                <label for="ptc">PTC</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="tecnico" name="modalidad" value="Técnico académico">
+                <label for="tecnico">Técnico académico</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="profesor" name="modalidad" value="Profesor de asignatura">
+                <label for="profesor">Profesor de asignatura</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="required">Profesor investigador</label>
+            <div class="radio-group">
+              <div class="radio-option">
+                <input type="radio" id="invSi" name="profesor-investigador" value="Si" required>
+                <label for="invSi">Sí</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="invNo" name="profesor-investigador" value="No">
+                <label for="invNo">No</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="required">Perfil PRODEP</label>
+            <div class="radio-group">
+              <div class="radio-option">
+                <input type="radio" id="prodepSi" name="perfil-prodep" value="Si" required>
+                <label for="prodepSi">Sí</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="prodepNo" name="perfil-prodep" value="No">
+                <label for="prodepNo">No</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="prodepTransito" name="perfil-prodep" value="En trámite">
+                <label for="prodepTransito">En trámite</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label class="required">Es miembro del SNI</label>
+            <div class="radio-group">
+              <div class="radio-option">
+                <input type="radio" id="sniSi" name="sni" value="Si" required>
+                <label for="sniSi">Sí</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="sniNo" name="sni" value="No">
+                <label for="sniNo">No</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Cuerpos Colegiados -->
+      <div class="section">
+        <h2 class="section-title">Cuerpos Colegiados</h2>
+        
+        <div class="form-row full">
+          <div class="form-group">
+            <label for="colegiados">Es miembro de algún consejo, comité o colegio</label>
+            <input type="text" id="colegiados" name="colegiados" placeholder="Especifique cuál (ej: Colegio Mexicano de Odontólogos)">
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Certificaciones -->
+      <div class="section">
+        <h2 class="section-title">Certificaciones</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="certProfesional">Certificación profesional</label>
+            <input type="text" id="certProfesional" name="certProfesional" placeholder="Especifique: Certificación de Especialidad o Profesional">
+          </div>
+          <div class="form-group">
+            <label for="certIdioma">Certificación de un segundo idioma</label>
+            <input type="text" id="certIdioma" name="certIdioma" placeholder="Especifique idioma y nivel (ej: Inglés B2)">
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Participación Docente -->
+      <div class="section">
+        <h2 class="section-title">Participación Docente</h2>
+        
+        <div class="form-row full">
+          <div class="form-group">
+            <label for="participacion">Programa o programas educativos en los que participa</label>
+            <input type="text" id="participacion" name="participacion" placeholder="Especifique la Licenciatura o Posgrado">
+          </div>
+        </div>
+      </div>
+
+      <!-- PARTE II: Evidencias de Desempeño y Formación Docente -->
+      <hr style="margin: 50px 0; border: none; border-top: 2px solid #006400;">
+
+      <h1 style="color: #006400; font-size: 1.8rem; margin: 40px 0 8px 0; font-weight: 600;">II. Evidencias de Desempeño y Formación Docente</h1>
+      <p class="subtitle" style="margin-bottom: 40px;">Adjunte las evidencias que comprueben cada actividad.</p>
+
+      <!-- Sección Planeación Docente -->
+      <div class="section">
+        <h2 class="section-title">Planeación Docente</h2>
+        
+        <div class="form-row full">
+          <div class="form-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 6px;">Encuadre, cronograma, rúbricas de evaluación</label>
+            <div class="file-upload-group">
+              <button type="button" class="file-upload-btn" onclick="document.getElementById('file-planeacion').click()">Seleccionar archivo</button>
+              <span class="file-name" id="file-planeacion-name">Ningún archivo seleccionado</span>
+            </div>
+            <input type="file" id="file-planeacion" class="file-input" name="file-planeacion">
+            <p class="help-text">Documentos que sustentan la planeación de las asignaturas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Formación Continua -->
+      <div class="section">
+        <h2 class="section-title">Formación Continua</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 6px;">Cursos docentes tomados por período</label>
+            <div class="file-upload-group">
+              <button type="button" class="file-upload-btn" onclick="document.getElementById('file-cursos-docentes').click()">Seleccionar archivo</button>
+              <span class="file-name" id="file-cursos-docentes-name">Ningún archivo seleccionado</span>
+            </div>
+            <input type="file" id="file-cursos-docentes" class="file-input" name="file-cursos-docentes">
+            <p class="help-text">Cursos de pedagogía, didáctica, etc.</p>
+          </div>
+          <div class="form-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 6px;">Cursos disciplinares por período</label>
+            <div class="file-upload-group">
+              <button type="button" class="file-upload-btn" onclick="document.getElementById('file-cursos-disciplinares').click()">Seleccionar archivo</button>
+              <span class="file-name" id="file-cursos-disciplinares-name">Ningún archivo seleccionado</span>
+            </div>
+            <input type="file" id="file-cursos-disciplinares" class="file-input" name="file-cursos-disciplinares">
+            <p class="help-text">Cursos de su área de conocimiento.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 6px;">Organización de eventos académicos</label>
+            <div class="file-upload-group">
+              <button type="button" class="file-upload-btn" onclick="document.getElementById('file-eventos-academicos').click()">Seleccionar archivo</button>
+              <span class="file-name" id="file-eventos-academicos-name">Ningún archivo seleccionado</span>
+            </div>
+            <input type="file" id="file-eventos-academicos" class="file-input" name="file-eventos-academicos">
+            <p class="help-text">Constancia, flyer, lista de asistencia.</p>
+          </div>
+          <div class="form-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 6px;">Organización de eventos o cursos docentes</label>
+            <div class="file-upload-group">
+              <button type="button" class="file-upload-btn" onclick="document.getElementById('file-eventos-docentes').click()">Seleccionar archivo</button>
+              <span class="file-name" id="file-eventos-docentes-name">Ningún archivo seleccionado</span>
+            </div>
+            <input type="file" id="file-eventos-docentes" class="file-input" name="file-eventos-docentes">
+            <p class="help-text">Constancia, flyer, lista de asistencia.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección Tutoría y Asesoría -->
+      <div class="section">
+        <h2 class="section-title">Tutoría y Asesoría</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 6px;">Tutorías académicas (de acompañamiento)</label>
+            <div class="file-upload-group">
+              <button type="button" class="file-upload-btn" onclick="document.getElementById('file-tutorias').click()">Seleccionar archivo</button>
+              <span class="file-name" id="file-tutorias-name">Ningún archivo seleccionado</span>
+            </div>
+            <input type="file" id="file-tutorias" class="file-input" name="file-tutorias">
+            <p class="help-text">Solo aplica si es PTC.</p>
+          </div>
+          <div class="form-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 6px;">Asesor académico</label>
+            <div class="file-upload-group">
+              <button type="button" class="file-upload-btn" onclick="document.getElementById('file-asesor').click()">Seleccionar archivo</button>
+              <span class="file-name" id="file-asesor-name">Ningún archivo seleccionado</span>
+            </div>
+            <input type="file" id="file-asesor" class="file-input" name="file-asesor">
+            <p class="help-text">Apoyo en asignaturas (PTC o asignatura).</p>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 6px;">Tutor académico (trabajos de investigación)</label>
+            <div class="file-upload-group">
+              <button type="button" class="file-upload-btn" onclick="document.getElementById('file-tutor-investigacion').click()">Seleccionar archivo</button>
+              <span class="file-name" id="file-tutor-investigacion-name">Ningún archivo seleccionado</span>
+            </div>
+            <input type="file" id="file-tutor-investigacion" class="file-input" name="file-tutor-investigacion">
+            <p class="help-text">Asesoría en tesis, proyectos terminales, etc.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="button-group">
+        <button type="reset" class="btn btn-secondary">Limpiar</button>
+        <button type="submit" class="btn btn-primary">Enviar Formulario</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Manejo de carga de archivos
+    const fileInputs = [
+      'file-planeacion',
+      'file-cursos-docentes',
+      'file-cursos-disciplinares',
+      'file-eventos-academicos',
+      'file-eventos-docentes',
+      'file-tutorias',
+      'file-asesor',
+      'file-tutor-investigacion'
+    ];
+
+    fileInputs.forEach(inputId => {
+      const fileInput = document.getElementById(inputId);
+      fileInput.addEventListener('change', function() {
+        const fileNameSpan = document.getElementById(inputId + '-name');
+        if (this.files.length > 0) {
+          const fileName = this.files[0].name;
+          fileNameSpan.textContent = fileName;
+          fileNameSpan.classList.add('loaded');
+        } else {
+          fileNameSpan.textContent = 'Ningún archivo seleccionado';
+          fileNameSpan.classList.remove('loaded');
+        }
+      });
+    });
+
+    document.getElementById('docenteForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Formulario enviado correctamente');
+      // Aquí iría la lógica para enviar los datos al servidor
+    });
+  </script>
+</body>
+</html>
